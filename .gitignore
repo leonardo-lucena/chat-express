@@ -1,0 +1,4 @@
+# Arquivo .gitignore
+
+# Ignorar a pasta node_modules
+node_modules/
