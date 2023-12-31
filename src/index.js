@@ -1,4 +1,3 @@
-import { Socket } from 'dgram';
 import express from 'express';
 import http from 'http';
 import socketio from 'socket.io';
@@ -11,22 +10,15 @@ app.use(express.static(__dirname + '/public'))
 const io = socketio(server);
 
 io.on('connect', (socket) => {
-    io.to(socket.id).emit({
-        status: true,
-        message: "Conexão estabelecida"
-    })
-
-    socket.on('teste', (res) => {
-        console.log('Mensagem recebida!', res);
-
-        io.to(socket.id).emit(res);
-    })
+    socket.on('chat', (res) => {
+        socket.broadcast.emit('chat', res);
+    });
 });
 
 app.get('/', (req, res) => {
-    res.render('index.html');
-})
+    res.sendFile(__dirname + '/index.html');
+});
 
 server.listen(60000, () => {
-    console.log("Servidor ON em", 60000)
-})
+    console.log("Servidor ON - porta ", 60000)
+});

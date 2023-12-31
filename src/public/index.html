@@ -11,12 +11,37 @@
             transports: ['websocket']
         });
 
-        function send(){
-            socket.emit('teste', 'Olá, servidor! Aqui é o front');
+        socket.on("chat", (res) => {
+            screen(res.user, res.message);
+        });
+
+        function send() {
+            const user = document.querySelector("#user").value;
+            const message = document.querySelector("#message").value;
+            socket.emit('chat', {
+                user, message
+            });
+
+            screen("Me", message);
+            document.querySelector("#message").value = "";
+        }
+
+        function screen(user, message) {
+            const messagesDiv = document.querySelector('#messages');
+            messagesDiv.innerHTML += `<p><strong>${user}</strong> - ${message}</p>`;
         }
     </script>
 </head>
 <body>
-    <h1>Hello mundo</h1>
+    <input id="user" placeholder="Informe um usuário">
+    <br/>
+
+    <textarea name="message" id="message" cols="30" rows="10"></textarea>
+    <br/>
+    
+    <button onclick="send()">Enviar</button>
+    <hr/>
+    
+    <div id="messages"></div>
 </body>
 </html>
