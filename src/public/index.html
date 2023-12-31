@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Express</title>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io("http://localhost:60000", {
+            transports: ['websocket']
+        });
+
+        function send(){
+            socket.emit('teste', 'Olá, servidor! Aqui é o front');
+        }
+    </script>
+</head>
+<body>
+    <h1>Hello mundo</h1>
+</body>
+</html>
